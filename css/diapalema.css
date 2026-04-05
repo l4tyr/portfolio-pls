@@ -118,6 +118,34 @@ nav {
   color: var(--sombre);
   background: none;
   border: none;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.hamburger-mobile:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.hamburger-mobile span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--sombre);
+  margin: 4px 0;
+  transition: 0.3s;
+}
+
+nav.menu-ouvert .hamburger-mobile span:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 5px);
+}
+
+nav.menu-ouvert .hamburger-mobile span:nth-child(2) {
+  opacity: 0;
+}
+
+nav.menu-ouvert .hamburger-mobile span:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -5px);
 }
 
 
@@ -953,10 +981,28 @@ section {
 }
 
 @media (max-width: 768px) {
-  .liens-nav, .bouton-nav { display: none; }
+  .liens-nav, .bouton-nav, .bouton-contact { display: none; }
   .hamburger-mobile { display: block; }
   section { padding: 80px 5vw; }
   .formulaire-inscription { flex-direction: column; }
   .actions-modal { flex-direction: column; }
+
+  nav.menu-ouvert .liens-nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(245, 247, 242, 0.95);
+    backdrop-filter: blur(16px);
+    padding: 20px 5vw;
+    border-bottom: 1px solid var(--bordure);
+  }
+
+  nav.menu-ouvert .bouton-contact {
+    display: block;
+    margin-top: 10px;
+  }
 }
 

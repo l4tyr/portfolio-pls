@@ -1,376 +1,2335 @@
 <!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>DIAPALEMA — Aide en chemin</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-  
-  <link rel="stylesheet" href="css/diapalema.css" />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DIAPALEMA — Aide en chemin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
 
-  
-  <nav id="barre-navigation">
-    <a href="index.html" class="logo-nav">PL<span>.</span></a>
+    <style>
+      :root {
+        --vert: #00c853;
+        --vert-fonce: #009624;
+        --vert-clair: #69f0ae;
+        --orange: #ff6d00;
+        --orange-clair: #ff9e40;
+        --fond: #f5f7f2;
+        --blanc: #ffffff;
+        --sombre: #0d1f0f;
+        --sombre2: #1a3320;
+        --discret: #6b7c6e;
+        --bordure: rgba(0, 0, 0, 0.08);
+        --police: "Plus Jakarta Sans", sans-serif;
+        --mono: "Space Mono", monospace;
+        --transition: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--fond);
+        color: var(--sombre);
+        font-family: var(--police);
+        overflow-x: hidden;
+      }
 
-    <ul class="liens-nav">
-      <li><a href="index.html#a-propos">À propos</a></li>
-      <li><a href="index.html#competences">Compétences</a></li>
-      <li><a href="index.html#projet">Projet</a></li>
-      <li><a href="index.html#parcours">Parcours</a></li>
-      <li><a href="diapalema.html" class="actif">DIAPALEMA</a></li>
-    </ul>
+      /* NAV */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 18px 5vw;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(245, 247, 242, 0.92);
+        backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--bordure);
+        transition: box-shadow 0.3s;
+      }
+      nav.defilement {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      }
+      .logo-nav {
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: var(--sombre);
+        text-decoration: none;
+      }
+      .logo-nav span {
+        color: var(--vert);
+      }
+      .liens-nav {
+        display: flex;
+        gap: 28px;
+        list-style: none;
+      }
+      .liens-nav a {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--discret);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .liens-nav a:hover {
+        color: var(--sombre);
+      }
+      .liens-nav a.actif {
+        color: var(--vert);
+        font-weight: 700;
+      }
+      .bouton-contact {
+        background: var(--vert);
+        color: #fff;
+        padding: 10px 22px;
+        border-radius: 99px;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: all 0.3s;
+        box-shadow: 0 4px 14px rgba(0, 200, 83, 0.3);
+      }
+      .bouton-contact:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 200, 83, 0.4);
+      }
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+      }
+      .hamburger span {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: var(--sombre);
+        border-radius: 2px;
+      }
 
-    <a href="index.html#contact" class="bouton-contact">Contact</a>
+      /* HERO */
+      #haut {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 100px 5vw 60px;
+        position: relative;
+        overflow: hidden;
+      }
+      .fond-hero {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(
+            circle at 70% 50%,
+            rgba(0, 200, 83, 0.06) 0%,
+            transparent 55%
+          ),
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(255, 109, 0, 0.05) 0%,
+            transparent 45%
+          );
+      }
+      .grille-carte {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(0, 150, 36, 0.06) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 150, 36, 0.06) 1px, transparent 1px);
+        background-size: 50px 50px;
+        mask-image: radial-gradient(
+          ellipse 80% 80% at 70% 50%,
+          black 30%,
+          transparent 100%
+        );
+      }
+      .contenu-hero {
+        position: relative;
+        z-index: 2;
+        max-width: 560px;
+      }
+      .etiquette-hero {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(0, 200, 83, 0.08);
+        border: 1px solid rgba(0, 200, 83, 0.2);
+        padding: 8px 16px;
+        border-radius: 99px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--vert-fonce);
+        margin-bottom: 28px;
+      }
+      .titre-hero {
+        font-size: clamp(40px, 6vw, 76px);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 1.05;
+        margin-bottom: 20px;
+        color: var(--sombre);
+      }
+      .titre-hero span {
+        background: linear-gradient(135deg, var(--vert), var(--vert-fonce));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .sous-titre-hero {
+        font-size: clamp(15px, 1.8vw, 18px);
+        color: var(--discret);
+        line-height: 1.7;
+        margin-bottom: 40px;
+      }
+      .actions-hero {
+        display: flex;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .bouton-principal {
+        background: var(--vert);
+        color: #fff;
+        padding: 14px 28px;
+        border-radius: 99px;
+        font-size: 15px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: all 0.3s;
+        box-shadow: 0 6px 20px rgba(0, 200, 83, 0.35);
+      }
+      .bouton-principal:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(0, 200, 83, 0.45);
+      }
+      .bouton-secondaire {
+        background: var(--blanc);
+        color: var(--sombre);
+        padding: 14px 28px;
+        border-radius: 99px;
+        font-size: 15px;
+        font-weight: 600;
+        text-decoration: none;
+        border: 1px solid var(--bordure);
+        transition: all 0.3s;
+      }
+      .bouton-secondaire:hover {
+        border-color: var(--vert);
+        color: var(--vert);
+      }
 
-    
-    <button class="hamburger" id="bouton-menu">
-      <span></span>
-      <span></span>
-    </button>
-  </nav>
+      /* CARTE HERO */
+      .zone-carte {
+        position: absolute;
+        right: 5%;
+        top: 50%;
+        transform: translateY(-50%);
+        width: min(480px, 45vw);
+        height: 500px;
+      }
+      .carte-flottante {
+        position: absolute;
+        background: var(--blanc);
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+        overflow: hidden;
+        animation: flottement 6s ease-in-out infinite;
+      }
+      .carte-flottante.principale {
+        width: 100%;
+        bottom: 0;
+        right: 0;
+        border-radius: 20px;
+      }
+      .fond-fausse-carte {
+        width: 100%;
+        background: #e8f5e9;
+        height: 260px;
+        position: relative;
+        overflow: hidden;
+      }
+      .grille-fausse-carte {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(0, 150, 36, 0.08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 150, 36, 0.08) 1px, transparent 1px);
+        background-size: 30px 30px;
+      }
+      .fausse-route {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 2px;
+      }
+      .fausse-route.h {
+        height: 8px;
+        width: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .fausse-route.v {
+        width: 8px;
+        height: 100%;
+        left: 40%;
+      }
+      .fausse-route.h2 {
+        height: 5px;
+        width: 60%;
+        top: 30%;
+        opacity: 0.5;
+      }
+      .fausse-route.h3 {
+        height: 5px;
+        width: 70%;
+        top: 70%;
+        opacity: 0.5;
+      }
+      .epingle {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        animation: rebond-epingle 2s ease-in-out infinite;
+      }
+      .corps-epingle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50% 50% 50% 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        transform: rotate(-45deg);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+      .corps-epingle span {
+        transform: rotate(45deg);
+      }
+      .corps-epingle.vert {
+        background: var(--vert);
+      }
+      .corps-epingle.orange {
+        background: var(--orange);
+      }
+      .corps-epingle.bleu {
+        background: #1565c0;
+      }
+      .corps-epingle.jaune {
+        background: #f59e0b;
+      }
+      .bulle-epingle {
+        background: rgba(0, 0, 0, 0.75);
+        color: #fff;
+        padding: 3px 8px;
+        border-radius: 99px;
+        font-size: 10px;
+        font-family: var(--mono);
+        margin-top: 4px;
+        white-space: nowrap;
+      }
+      .infos-carte {
+        padding: 16px;
+      }
+      .en-tete-carte {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .titre-carte {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--sombre);
+      }
+      .badge-vert {
+        background: rgba(0, 200, 83, 0.1);
+        color: var(--vert);
+        padding: 3px 10px;
+        border-radius: 99px;
+        font-size: 11px;
+        font-weight: 600;
+      }
+      .ligne-pro {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .avatar-pro {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--orange), var(--orange-clair));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+      }
+      .info-pro .nom {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--sombre);
+      }
+      .info-pro .distance {
+        font-size: 11px;
+        color: var(--vert);
+        font-family: var(--mono);
+      }
+      .badges-stats {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+      }
+      .badge-stat {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        background: var(--fond);
+        padding: 4px 10px;
+        border-radius: 99px;
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--discret);
+      }
 
-  
-  <section id="haut">
-    <div class="fond-hero"></div>
-    <div class="grille-carte"></div>
+      /* SECTIONS */
+      section {
+        padding: 100px 5vw;
+        position: relative;
+      }
+      .en-tete-section {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+      .etiquette-section {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(0, 200, 83, 0.06);
+        border: 1px solid rgba(0, 200, 83, 0.15);
+        padding: 6px 16px;
+        border-radius: 99px;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--vert-fonce);
+        margin-bottom: 16px;
+      }
+      .titre-section {
+        font-size: clamp(32px, 5vw, 56px);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        line-height: 1.1;
+        color: var(--sombre);
+        margin-bottom: 16px;
+      }
+      .sous-titre-section {
+        font-size: 16px;
+        color: var(--discret);
+        max-width: 500px;
+        margin: 0 auto;
+        line-height: 1.7;
+      }
+      .apparition {
+        opacity: 0;
+        transform: translateY(30px);
+        transition:
+          opacity 0.8s var(--transition),
+          transform 0.8s var(--transition);
+      }
+      .apparition.visible {
+        opacity: 1;
+        transform: none;
+      }
 
-    <div class="contenu-hero">
-      <div class="etiquette-hero">🛣️ Aide en chemin</div>
+      /* STATS */
+      #statistiques {
+        background: linear-gradient(
+          135deg,
+          var(--sombre) 0%,
+          var(--sombre2) 100%
+        );
+        padding: 80px 5vw;
+      }
+      .grille-stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 32px;
+        text-align: center;
+      }
+      .stat-nombre {
+        font-size: clamp(40px, 6vw, 64px);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        font-family: var(--mono);
+        background: linear-gradient(135deg, var(--vert-clair), var(--vert));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1;
+        margin-bottom: 10px;
+      }
+      .stat-label {
+        font-size: 14px;
+        color: rgba(255, 255, 255, 0.6);
+        font-weight: 500;
+      }
 
-      <h1 class="titre-hero">
-        Trouvez de l'aide<br />
-        <span>où que vous soyez</span>
-      </h1>
+      /* SERVICES */
+      #services {
+        background: var(--blanc);
+      }
+      .grille-services {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+      }
+      .carte-service {
+        background: var(--fond);
+        border-radius: 20px;
+        padding: 32px 24px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s var(--transition);
+        border: 1px solid transparent;
+      }
+      .carte-service:hover {
+        transform: translateY(-6px);
+        border-color: var(--vert);
+        box-shadow: 0 16px 40px rgba(0, 200, 83, 0.12);
+        background: var(--blanc);
+      }
+      .emoji-service {
+        font-size: 40px;
+        margin-bottom: 16px;
+      }
+      .nom-service {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--sombre);
+        margin-bottom: 8px;
+      }
+      .description-service {
+        font-size: 13px;
+        color: var(--discret);
+        line-height: 1.5;
+      }
 
-      <p class="sous-titre-hero">
-        DIAPALEMA connecte instantanément les personnes en difficulté
-        avec les professionnels disponibles les plus proches au Sénégal.
-      </p>
+      /* COMMENT ÇA MARCHE */
+      #comment-ca-marche {
+        background: var(--fond);
+      }
+      .grille-etapes {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 0;
+        position: relative;
+      }
+      .grille-etapes::before {
+        content: "";
+        position: absolute;
+        top: 36px;
+        left: 10%;
+        right: 10%;
+        height: 2px;
+        background: linear-gradient(90deg, var(--vert), var(--orange));
+        z-index: 0;
+      }
+      .etape {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 0 24px;
+        position: relative;
+        z-index: 1;
+      }
+      .numero-etape {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: var(--blanc);
+        border: 3px solid var(--vert);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        font-weight: 800;
+        color: var(--vert);
+        margin-bottom: 24px;
+        box-shadow: 0 8px 24px rgba(0, 200, 83, 0.15);
+        font-family: var(--mono);
+      }
+      .etape:nth-child(2) .numero-etape {
+        border-color: var(--orange);
+        color: var(--orange);
+        box-shadow: 0 8px 24px rgba(255, 109, 0, 0.15);
+      }
+      .etape:nth-child(3) .numero-etape {
+        border-color: #1565c0;
+        color: #1565c0;
+        box-shadow: 0 8px 24px rgba(21, 101, 192, 0.15);
+      }
+      .etape:nth-child(4) .numero-etape {
+        border-color: var(--vert-fonce);
+        color: var(--vert-fonce);
+      }
+      .emoji-etape {
+        font-size: 28px;
+        margin-bottom: 16px;
+      }
+      .titre-etape {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--sombre);
+        margin-bottom: 10px;
+      }
+      .desc-etape {
+        font-size: 13px;
+        color: var(--discret);
+        line-height: 1.6;
+      }
 
-      <div class="actions-hero">
-        <a href="#services" class="bouton-principal">Découvrir les services</a>
-        <a href="#appel-action" class="bouton-secondaire">Devenir prestataire</a>
-      </div>
-    </div>
+      /* RECHERCHE */
+      #carte-recherche {
+        background: var(--fond);
+      }
+      .contenu-carte-recherche {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        align-items: start;
+      }
+      .barre-recherche {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .champ-recherche {
+        flex: 1;
+        padding: 14px 18px;
+        border: 1px solid var(--bordure);
+        border-radius: 99px;
+        font-family: var(--police);
+        font-size: 14px;
+        outline: none;
+        background: var(--blanc);
+        transition: border-color 0.3s;
+      }
+      .champ-recherche:focus {
+        border-color: var(--vert);
+      }
+      .bouton-rechercher {
+        background: var(--vert);
+        color: #fff;
+        border: none;
+        border-radius: 99px;
+        padding: 14px 24px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .bouton-rechercher:hover {
+        background: var(--vert-fonce);
+        transform: translateY(-2px);
+      }
+      .liste-resultats {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .carte-resultat {
+        background: var(--blanc);
+        border-radius: 16px;
+        padding: 16px;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: 2px solid transparent;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+      }
+      .carte-resultat:hover,
+      .carte-resultat.actif {
+        border-color: var(--vert);
+        box-shadow: 0 8px 24px rgba(0, 200, 83, 0.12);
+      }
+      .haut-resultat {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+      .avatar-resultat {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+      }
+      .nom-resultat {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--sombre);
+      }
+      .metier-resultat {
+        font-size: 12px;
+        color: var(--discret);
+      }
+      .meta-resultat {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .distance-resultat {
+        font-size: 12px;
+        color: var(--discret);
+      }
+      .etoiles {
+        font-size: 12px;
+        color: #f59e0b;
+      }
+      .actions-resultat {
+        display: flex;
+        gap: 8px;
+      }
+      .bouton-appeler {
+        flex: 1;
+        background: var(--vert);
+        color: #fff;
+        border: none;
+        border-radius: 99px;
+        padding: 9px 16px;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .bouton-appeler:hover {
+        background: var(--vert-fonce);
+      }
+      .bouton-message {
+        background: var(--fond);
+        border: 1px solid var(--bordure);
+        border-radius: 99px;
+        padding: 9px 14px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .bouton-message:hover {
+        border-color: var(--vert);
+      }
+      .zone-carte-visuelle {
+        background: var(--blanc);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+        position: sticky;
+        top: 100px;
+      }
+      .fond-carte-visuelle {
+        height: 420px;
+        background: #e8f5e9;
+        position: relative;
+        overflow: hidden;
+      }
 
-    
-    <div class="zone-carte">
-      <div class="carte-flottante principale">
-        <div class="fond-fausse-carte">
-          <div class="grille-fausse-carte"></div>
-          
-          <div class="fausse-route h"></div>
-          <div class="fausse-route v"></div>
-          <div class="fausse-route h2"></div>
-          <div class="fausse-route h3"></div>
-          
-          <div class="epingle" style="top:40%;left:35%">
-            <div class="corps-epingle vert"><span>📍</span></div>
-            <div class="bulle-epingle" style="color:#00c853">Vous</div>
-          </div>
-          <div class="epingle" style="top:20%;left:55%">
-            <div class="corps-epingle orange"><span>🔧</span></div>
-            <div class="bulle-epingle">Mécanicien</div>
-          </div>
-          <div class="epingle" style="top:60%;left:60%;animation-delay:1s">
-            <div class="corps-epingle bleu"><span>🏥</span></div>
-            <div class="bulle-epingle">Médecin</div>
-          </div>
+      /* ZONES */
+      #zones {
+        background: var(--blanc);
+      }
+      .grille-zones {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+      }
+      .carte-zone {
+        background: var(--fond);
+        border-radius: 16px;
+        padding: 24px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        border: 1px solid var(--bordure);
+        transition: all 0.3s;
+      }
+      .carte-zone:hover {
+        border-color: var(--vert);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(0, 200, 83, 0.1);
+      }
+      .emoji-zone {
+        font-size: 28px;
+      }
+      .nom-zone {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--sombre);
+      }
+      .nb-pros {
+        font-size: 12px;
+        color: var(--vert);
+        font-family: var(--mono);
+        margin-top: 2px;
+      }
+
+      /* TÉMOIGNAGES */
+      #temoignages {
+        background: var(--fond);
+      }
+      .grille-temoignages {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 24px;
+      }
+      .carte-temoignage {
+        background: var(--blanc);
+        border-radius: 20px;
+        padding: 28px;
+        border: 1px solid var(--bordure);
+        transition: all 0.3s;
+      }
+      .carte-temoignage:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+      }
+      .etoiles-temoignage {
+        color: #f59e0b;
+        font-size: 16px;
+        margin-bottom: 16px;
+      }
+      .texte-temoignage {
+        font-size: 14px;
+        color: var(--discret);
+        line-height: 1.7;
+        margin-bottom: 20px;
+        font-style: italic;
+      }
+      .auteur-temoignage {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .avatar-temoignage {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--vert), var(--vert-fonce));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: #fff;
+        font-size: 16px;
+      }
+      .nom-auteur {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--sombre);
+      }
+      .ville-auteur {
+        font-size: 12px;
+        color: var(--discret);
+      }
+
+      /* FAQ */
+      #faq {
+        background: var(--blanc);
+      }
+      .liste-faq {
+        max-width: 720px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .item-faq {
+        background: var(--fond);
+        border-radius: 16px;
+        border: 1px solid var(--bordure);
+        overflow: hidden;
+        transition: border-color 0.3s;
+      }
+      .item-faq.ouvert {
+        border-color: var(--vert);
+        background: var(--blanc);
+      }
+      .question-faq {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 22px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: var(--police);
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--sombre);
+        cursor: pointer;
+        text-align: left;
+        gap: 16px;
+      }
+      .icone-faq {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: rgba(0, 200, 83, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        color: var(--vert);
+        flex-shrink: 0;
+        transition: transform 0.4s var(--transition);
+      }
+      .item-faq.ouvert .icone-faq {
+        transform: rotate(45deg);
+      }
+      .reponse-faq {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s var(--transition);
+      }
+      .reponse-faq-interieur {
+        padding: 0 24px 22px;
+        font-size: 14px;
+        color: var(--discret);
+        line-height: 1.7;
+      }
+
+      /* CTA */
+      #appel-action {
+        background: linear-gradient(
+          135deg,
+          var(--sombre) 0%,
+          var(--sombre2) 100%
+        );
+        text-align: center;
+      }
+      .contenu-cta {
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      .titre-cta {
+        font-size: clamp(36px, 5vw, 60px);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        color: #fff;
+        line-height: 1.1;
+        margin-bottom: 20px;
+      }
+      .titre-cta span {
+        color: var(--vert-clair);
+      }
+      .sous-titre-cta {
+        font-size: 16px;
+        color: rgba(255, 255, 255, 0.6);
+        line-height: 1.7;
+        margin-bottom: 40px;
+      }
+      .formulaire-inscription {
+        display: flex;
+        gap: 12px;
+        max-width: 440px;
+        margin: 0 auto;
+      }
+      .champ-telephone {
+        flex: 1;
+        padding: 14px 20px;
+        border-radius: 99px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        font-family: var(--police);
+        font-size: 15px;
+        outline: none;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+      }
+      .champ-telephone::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+      .champ-telephone:focus {
+        border-color: var(--vert-clair);
+      }
+      .bouton-inscription {
+        background: var(--vert);
+        color: #fff;
+        border: none;
+        border-radius: 99px;
+        padding: 14px 28px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        white-space: nowrap;
+      }
+      .bouton-inscription:hover {
+        background: var(--vert-clair);
+        color: var(--sombre);
+        transform: translateY(-2px);
+      }
+
+      /* MODAL */
+      #modal {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s;
+        backdrop-filter: blur(4px);
+      }
+      #modal.ouvert {
+        opacity: 1;
+        visibility: visible;
+      }
+      .contenu-modal {
+        background: var(--blanc);
+        border-radius: 24px;
+        padding: 32px;
+        width: min(440px, 90vw);
+        position: relative;
+        box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
+      }
+      .bouton-fermer-modal {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: var(--fond);
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .profil-modal {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+      .avatar-modal {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        background: var(--fond);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+      }
+      .nom-modal {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--sombre);
+      }
+      .metier-modal {
+        font-size: 13px;
+        color: var(--discret);
+      }
+      .infos-modal {
+        display: flex;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      .info-modal-item {
+        flex: 1;
+        background: var(--fond);
+        border-radius: 12px;
+        padding: 12px;
+        text-align: center;
+      }
+      .info-modal-label {
+        font-size: 11px;
+        color: var(--discret);
+        margin-bottom: 4px;
+      }
+      .info-modal-valeur {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--sombre);
+      }
+      .actions-modal {
+        display: flex;
+        gap: 10px;
+      }
+      .bouton-appeler-modal {
+        flex: 1;
+        background: var(--vert);
+        color: #fff;
+        border: none;
+        border-radius: 99px;
+        padding: 14px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .bouton-appeler-modal:hover {
+        background: var(--vert-fonce);
+      }
+      .bouton-message-modal {
+        background: var(--fond);
+        border: 1px solid var(--bordure);
+        border-radius: 99px;
+        padding: 14px 20px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      /* NOTIFICATION */
+      #notification {
+        position: fixed;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        background: var(--sombre);
+        color: #fff;
+        padding: 14px 28px;
+        border-radius: 99px;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 2000;
+        transition: transform 0.4s var(--transition);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        white-space: nowrap;
+      }
+      #notification.affiche {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      /* FOOTER */
+      #pied-page {
+        background: var(--sombre);
+        padding: 60px 5vw 32px;
+      }
+      .grille-pied {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 48px;
+        margin-bottom: 48px;
+        padding-bottom: 48px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+      .logo-pied {
+        font-size: 20px;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 14px;
+        letter-spacing: -0.02em;
+      }
+      .logo-pied span {
+        color: var(--vert-clair);
+      }
+      .desc-pied {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.5);
+        line-height: 1.7;
+        max-width: 260px;
+      }
+      .colonne-pied h4 {
+        font-size: 12px;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.4);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 16px;
+      }
+      .colonne-pied ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .colonne-pied ul a {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .colonne-pied ul a:hover {
+        color: #fff;
+      }
+      .barre-pied {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+      .copyright {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.35);
+      }
+      .copyright span {
+        color: var(--vert-clair);
+      }
+      .retour-haut {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+      .retour-haut:hover {
+        color: #fff;
+      }
+
+      /* ANIMATIONS */
+      @keyframes flottement {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+      @keyframes rebond-epingle {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 1024px) {
+        .zone-carte {
+          display: none;
+        }
+        .contenu-carte-recherche {
+          grid-template-columns: 1fr;
+        }
+        .grille-etapes::before {
+          display: none;
+        }
+        .grille-pied {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 768px) {
+        .liens-nav {
+          display: none;
+        }
+        .bouton-contact {
+          display: none;
+        }
+        .hamburger {
+          display: flex;
+        }
+        section {
+          padding: 80px 5vw;
+        }
+        .formulaire-inscription {
+          flex-direction: column;
+        }
+        .actions-modal {
+          flex-direction: column;
+        }
+        .grille-pied {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+        .etape {
+          padding: 0 8px 40px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAV -->
+    <nav id="barre-navigation">
+      <a href="index.html" class="logo-nav">PL<span>.</span></a>
+      <ul class="liens-nav">
+        <li><a href="index.html#a-propos">À propos</a></li>
+        <li><a href="index.html#competences">Compétences</a></li>
+        <li><a href="index.html#projet">Projet</a></li>
+        <li><a href="index.html#parcours">Parcours</a></li>
+        <li><a href="diapalema.html" class="actif">DIAPALEMA</a></li>
+      </ul>
+      <a href="index.html#contact" class="bouton-contact">Contact</a>
+      <button class="hamburger" id="bouton-menu" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- HERO -->
+    <section id="haut">
+      <div class="fond-hero"></div>
+      <div class="grille-carte"></div>
+      <div class="contenu-hero">
+        <div class="etiquette-hero">🛣️ Aide en chemin</div>
+        <h1 class="titre-hero">
+          Trouvez de l'aide<br /><span>où que vous soyez</span>
+        </h1>
+        <p class="sous-titre-hero">
+          DIAPALEMA connecte instantanément les personnes en difficulté avec les
+          professionnels disponibles les plus proches au Sénégal.
+        </p>
+        <div class="actions-hero">
+          <a href="#services" class="bouton-principal"
+            >Découvrir les services</a
+          >
+          <a href="#appel-action" class="bouton-secondaire"
+            >Devenir prestataire</a
+          >
         </div>
-        <div class="infos-carte">
-          <div class="en-tete-carte">
-            <div class="titre-carte">Professionnel trouvé</div>
-            <div class="badge-vert">En ligne</div>
-          </div>
-          <div class="ligne-pro">
-            <div class="avatar-pro">🔧</div>
-            <div class="info-pro">
-              <div class="nom">Amadou Diallo</div>
-              <div class="distance">0.8 km · ~12 min</div>
+      </div>
+      <div class="zone-carte">
+        <div class="carte-flottante principale">
+          <div class="fond-fausse-carte">
+            <div class="grille-fausse-carte"></div>
+            <div class="fausse-route h"></div>
+            <div class="fausse-route v"></div>
+            <div class="fausse-route h2"></div>
+            <div class="fausse-route h3"></div>
+            <div class="epingle" style="top: 40%; left: 35%">
+              <div class="corps-epingle vert"><span>📍</span></div>
+              <div class="bulle-epingle">Vous</div>
+            </div>
+            <div class="epingle" style="top: 20%; left: 55%">
+              <div class="corps-epingle orange"><span>🔧</span></div>
+              <div class="bulle-epingle">Mécanicien</div>
+            </div>
+            <div
+              class="epingle"
+              style="top: 60%; left: 60%; animation-delay: 1s"
+            >
+              <div class="corps-epingle bleu"><span>🏥</span></div>
+              <div class="bulle-epingle">Médecin</div>
             </div>
           </div>
-          <div class="badges-stats">
-            <div class="badge-stat">⭐ 4.9</div>
-            <div class="badge-stat">✅ 127 missions</div>
+          <div class="infos-carte">
+            <div class="en-tete-carte">
+              <div class="titre-carte">Professionnel trouvé</div>
+              <div class="badge-vert">En ligne</div>
+            </div>
+            <div class="ligne-pro">
+              <div class="avatar-pro">🔧</div>
+              <div class="info-pro">
+                <div class="nom">Amadou Diallo</div>
+                <div class="distance">0.8 km · ~12 min</div>
+              </div>
+            </div>
+            <div class="badges-stats">
+              <div class="badge-stat">⭐ 4.9</div>
+              <div class="badge-stat">✅ 127 missions</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  
-  <section id="services">
-    <div class="en-tete-section">
-      <div class="etiquette-section">✦ Nos services</div>
-      <h2 class="titre-section apparition">Tout type d'aide,<br />en quelques minutes.</h2>
-      <p class="sous-titre-section apparition">
-        De la panne mécanique à l'urgence médicale, DIAPALEMA couvre tous vos besoins.
-      </p>
-    </div>
+    <!-- STATS -->
+    <section id="statistiques">
+      <div class="grille-stats">
+        <div class="apparition">
+          <div class="stat-nombre" data-cible="12400" data-suf="+">0</div>
+          <div class="stat-label">Utilisateurs inscrits</div>
+        </div>
+        <div class="apparition" style="transition-delay: 0.1s">
+          <div class="stat-nombre" data-cible="850" data-suf="+">0</div>
+          <div class="stat-label">Professionnels actifs</div>
+        </div>
+        <div class="apparition" style="transition-delay: 0.2s">
+          <div class="stat-nombre" data-cible="98" data-suf="%">0</div>
+          <div class="stat-label">Satisfaction client</div>
+        </div>
+        <div class="apparition" style="transition-delay: 0.3s">
+          <div class="stat-nombre" data-cible="14" data-suf="">0</div>
+          <div class="stat-label">Villes couvertes</div>
+        </div>
+      </div>
+    </section>
 
-    <div class="grille-services">
-      
-      <div class="carte-service apparition" onclick="allerVersService('Mécanicien')">
-        <div class="emoji-service">🔧</div>
-        <div class="nom-service">Mécanicien</div>
-        <div class="description-service">Panne de voiture ou moto, réparation rapide sur place.</div>
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="en-tete-section">
+        <div class="etiquette-section">✦ Nos services</div>
+        <h2 class="titre-section apparition">
+          Tout type d'aide,<br />en quelques minutes.
+        </h2>
+        <p class="sous-titre-section apparition">
+          De la panne mécanique à l'urgence médicale, DIAPALEMA couvre tous vos
+          besoins.
+        </p>
       </div>
-      <div class="carte-service apparition" onclick="allerVersService('Médecin')">
-        <div class="emoji-service">🏥</div>
-        <div class="nom-service">Médecin</div>
-        <div class="description-service">Consultation urgente à domicile ou en clinique proche.</div>
+      <div class="grille-services">
+        <div
+          class="carte-service apparition"
+          onclick="allerVersService('mécanicien')"
+        >
+          <div class="emoji-service">🔧</div>
+          <div class="nom-service">Mécanicien</div>
+          <div class="description-service">
+            Panne de voiture ou moto, réparation rapide sur place.
+          </div>
+        </div>
+        <div
+          class="carte-service apparition"
+          onclick="allerVersService('médecin')"
+        >
+          <div class="emoji-service">🏥</div>
+          <div class="nom-service">Médecin</div>
+          <div class="description-service">
+            Consultation urgente à domicile ou en clinique proche.
+          </div>
+        </div>
+        <div
+          class="carte-service apparition"
+          onclick="allerVersService('électricien')"
+        >
+          <div class="emoji-service">⚡</div>
+          <div class="nom-service">Électricien</div>
+          <div class="description-service">
+            Panne électrique, installation ou dépannage urgent.
+          </div>
+        </div>
+        <div
+          class="carte-service apparition"
+          onclick="allerVersService('plombier')"
+        >
+          <div class="emoji-service">🚿</div>
+          <div class="nom-service">Plombier</div>
+          <div class="description-service">
+            Fuite d'eau, canalisation bouchée, réparation rapide.
+          </div>
+        </div>
+        <div
+          class="carte-service apparition"
+          onclick="allerVersService('serrurier')"
+        >
+          <div class="emoji-service">🔑</div>
+          <div class="nom-service">Serrurier</div>
+          <div class="description-service">
+            Porte bloquée ou clé perdue, intervention immédiate.
+          </div>
+        </div>
+        <div
+          class="carte-service apparition"
+          onclick="allerVersService('remorquage')"
+        >
+          <div class="emoji-service">🚗</div>
+          <div class="nom-service">Remorquage</div>
+          <div class="description-service">
+            Véhicule en panne sur la route, dépannage et remorquage.
+          </div>
+        </div>
       </div>
-      <div class="carte-service apparition" onclick="allerVersService('Électricien')">
-        <div class="emoji-service">⚡</div>
-        <div class="nom-service">Électricien</div>
-        <div class="description-service">Panne électrique, installation ou dépannage urgent.</div>
-      </div>
-      <div class="carte-service apparition" onclick="allerVersService('Plombier')">
-        <div class="emoji-service">🚿</div>
-        <div class="nom-service">Plombier</div>
-        <div class="description-service">Fuite d'eau, canalisation bouchée, réparation rapide.</div>
-      </div>
-      <div class="carte-service apparition" onclick="allerVersService('Serrurier')">
-        <div class="emoji-service">🔑</div>
-        <div class="nom-service">Serrurier</div>
-        <div class="description-service">Porte bloquée ou clé perdue, intervention immédiate.</div>
-      </div>
-      <div class="carte-service apparition" onclick="allerVersService('Remorqueur')">
-        <div class="emoji-service">🚗</div>
-        <div class="nom-service">Remorquage</div>
-        <div class="description-service">Véhicule en panne sur la route, dépannage et remorquage.</div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  
-  <section id="carte-recherche">
-    <div class="en-tete-section">
-      <div class="etiquette-section">✦ Recherche</div>
-      <h2 class="titre-section apparition">Trouvez un pro<br />près de vous.</h2>
-    </div>
+    <!-- COMMENT ÇA MARCHE -->
+    <section id="comment-ca-marche">
+      <div class="en-tete-section">
+        <div class="etiquette-section">✦ Comment ça marche</div>
+        <h2 class="titre-section apparition">Simple, rapide,<br />efficace.</h2>
+        <p class="sous-titre-section apparition">
+          En quelques secondes, trouvez le professionnel qu'il vous faut.
+        </p>
+      </div>
+      <div class="grille-etapes">
+        <div class="etape apparition">
+          <div class="numero-etape">01</div>
+          <div class="emoji-etape">📍</div>
+          <div class="titre-etape">Partagez votre position</div>
+          <div class="desc-etape">
+            Activez la géolocalisation ou entrez votre adresse. DIAPALEMA
+            détecte votre zone en temps réel.
+          </div>
+        </div>
+        <div class="etape apparition" style="transition-delay: 0.1s">
+          <div class="numero-etape">02</div>
+          <div class="emoji-etape">🔍</div>
+          <div class="titre-etape">Choisissez le service</div>
+          <div class="desc-etape">
+            Mécanicien, médecin, électricien... sélectionnez votre besoin en un
+            seul clic.
+          </div>
+        </div>
+        <div class="etape apparition" style="transition-delay: 0.2s">
+          <div class="numero-etape">03</div>
+          <div class="emoji-etape">🤝</div>
+          <div class="titre-etape">Connectez-vous au pro</div>
+          <div class="desc-etape">
+            Les professionnels disponibles les plus proches vous sont proposés
+            avec note et temps d'arrivée.
+          </div>
+        </div>
+        <div class="etape apparition" style="transition-delay: 0.3s">
+          <div class="numero-etape">04</div>
+          <div class="emoji-etape">✅</div>
+          <div class="titre-etape">Problème résolu</div>
+          <div class="desc-etape">
+            Le pro intervient, vous évaluez la mission. Simple, transparent,
+            sécurisé.
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <div class="contenu-carte-recherche">
+    <!-- RECHERCHE -->
+    <section id="carte-recherche">
+      <div class="en-tete-section">
+        <div class="etiquette-section">✦ Recherche</div>
+        <h2 class="titre-section apparition">
+          Trouvez un pro<br />près de vous.
+        </h2>
+      </div>
+      <div class="contenu-carte-recherche">
+        <div>
+          <div class="barre-recherche">
+            <input
+              type="text"
+              class="champ-recherche"
+              id="champ-recherche"
+              placeholder="Ex: mécanicien, médecin..."
+            />
+            <button class="bouton-rechercher" onclick="filtrerResultats()">
+              Rechercher
+            </button>
+          </div>
+          <div class="liste-resultats" id="liste-resultats">
+            <div
+              class="carte-resultat"
+              data-metier="mécanicien"
+              onclick="
+                ouvrirModal(
+                  'Amadou Diallo',
+                  'Mécanicien Auto',
+                  '🔧',
+                  '0.8 km',
+                  '~12 min',
+                )
+              "
+            >
+              <div class="haut-resultat">
+                <div
+                  class="avatar-resultat"
+                  style="background: rgba(255, 109, 0, 0.1)"
+                >
+                  🔧
+                </div>
+                <div>
+                  <div class="nom-resultat">Amadou Diallo</div>
+                  <div class="metier-resultat">Mécanicien Auto</div>
+                </div>
+              </div>
+              <div class="meta-resultat">
+                <div class="distance-resultat">📍 0.8 km</div>
+                <div class="etoiles">★★★★★ 4.9</div>
+              </div>
+              <div class="actions-resultat">
+                <button
+                  class="bouton-appeler"
+                  onclick="
+                    event.stopPropagation();
+                    ouvrirModal(
+                      'Amadou Diallo',
+                      'Mécanicien Auto',
+                      '🔧',
+                      '0.8 km',
+                      '~12 min',
+                    );
+                  "
+                >
+                  📞 Contacter</button
+                ><button class="bouton-message">💬</button>
+              </div>
+            </div>
+            <div
+              class="carte-resultat"
+              data-metier="mécanicien"
+              onclick="
+                ouvrirModal(
+                  'Ibrahima Fall',
+                  'Mécanicien Moto',
+                  '🔧',
+                  '1.2 km',
+                  '~18 min',
+                )
+              "
+            >
+              <div class="haut-resultat">
+                <div
+                  class="avatar-resultat"
+                  style="background: rgba(255, 109, 0, 0.1)"
+                >
+                  🔧
+                </div>
+                <div>
+                  <div class="nom-resultat">Ibrahima Fall</div>
+                  <div class="metier-resultat">Mécanicien Moto</div>
+                </div>
+              </div>
+              <div class="meta-resultat">
+                <div class="distance-resultat">📍 1.2 km</div>
+                <div class="etoiles">★★★★☆ 4.6</div>
+              </div>
+              <div class="actions-resultat">
+                <button
+                  class="bouton-appeler"
+                  onclick="
+                    event.stopPropagation();
+                    ouvrirModal(
+                      'Ibrahima Fall',
+                      'Mécanicien Moto',
+                      '🔧',
+                      '1.2 km',
+                      '~18 min',
+                    );
+                  "
+                >
+                  📞 Contacter</button
+                ><button class="bouton-message">💬</button>
+              </div>
+            </div>
+            <div
+              class="carte-resultat"
+              data-metier="médecin"
+              onclick="
+                ouvrirModal(
+                  'Dr. Fatou Diop',
+                  'Médecin généraliste',
+                  '🏥',
+                  '1.5 km',
+                  '~20 min',
+                )
+              "
+            >
+              <div class="haut-resultat">
+                <div
+                  class="avatar-resultat"
+                  style="background: rgba(21, 101, 192, 0.1)"
+                >
+                  🏥
+                </div>
+                <div>
+                  <div class="nom-resultat">Dr. Fatou Diop</div>
+                  <div class="metier-resultat">Médecin généraliste</div>
+                </div>
+              </div>
+              <div class="meta-resultat">
+                <div class="distance-resultat">📍 1.5 km</div>
+                <div class="etoiles">★★★★★ 5.0</div>
+              </div>
+              <div class="actions-resultat">
+                <button
+                  class="bouton-appeler"
+                  onclick="
+                    event.stopPropagation();
+                    ouvrirModal(
+                      'Dr. Fatou Diop',
+                      'Médecin généraliste',
+                      '🏥',
+                      '1.5 km',
+                      '~20 min',
+                    );
+                  "
+                >
+                  📞 Contacter</button
+                ><button class="bouton-message">💬</button>
+              </div>
+            </div>
+            <div
+              class="carte-resultat"
+              data-metier="électricien"
+              onclick="
+                ouvrirModal(
+                  'Moussa Traoré',
+                  'Électricien',
+                  '⚡',
+                  '2.1 km',
+                  '~25 min',
+                )
+              "
+            >
+              <div class="haut-resultat">
+                <div
+                  class="avatar-resultat"
+                  style="background: rgba(245, 158, 11, 0.1)"
+                >
+                  ⚡
+                </div>
+                <div>
+                  <div class="nom-resultat">Moussa Traoré</div>
+                  <div class="metier-resultat">Électricien</div>
+                </div>
+              </div>
+              <div class="meta-resultat">
+                <div class="distance-resultat">📍 2.1 km</div>
+                <div class="etoiles">★★★★☆ 4.7</div>
+              </div>
+              <div class="actions-resultat">
+                <button
+                  class="bouton-appeler"
+                  onclick="
+                    event.stopPropagation();
+                    ouvrirModal(
+                      'Moussa Traoré',
+                      'Électricien',
+                      '⚡',
+                      '2.1 km',
+                      '~25 min',
+                    );
+                  "
+                >
+                  📞 Contacter</button
+                ><button class="bouton-message">💬</button>
+              </div>
+            </div>
+            <div
+              class="carte-resultat"
+              data-metier="plombier"
+              onclick="
+                ouvrirModal(
+                  'Cheikh Ndiaye',
+                  'Plombier',
+                  '🚿',
+                  '0.6 km',
+                  '~8 min',
+                )
+              "
+            >
+              <div class="haut-resultat">
+                <div
+                  class="avatar-resultat"
+                  style="background: rgba(21, 101, 192, 0.1)"
+                >
+                  🚿
+                </div>
+                <div>
+                  <div class="nom-resultat">Cheikh Ndiaye</div>
+                  <div class="metier-resultat">Plombier</div>
+                </div>
+              </div>
+              <div class="meta-resultat">
+                <div class="distance-resultat">📍 0.6 km</div>
+                <div class="etoiles">★★★★★ 4.8</div>
+              </div>
+              <div class="actions-resultat">
+                <button
+                  class="bouton-appeler"
+                  onclick="
+                    event.stopPropagation();
+                    ouvrirModal(
+                      'Cheikh Ndiaye',
+                      'Plombier',
+                      '🚿',
+                      '0.6 km',
+                      '~8 min',
+                    );
+                  "
+                >
+                  📞 Contacter</button
+                ><button class="bouton-message">💬</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="zone-carte-visuelle">
+          <div class="fond-carte-visuelle">
+            <div class="grille-fausse-carte"></div>
+            <div class="fausse-route h"></div>
+            <div class="fausse-route v"></div>
+            <div class="fausse-route h2"></div>
+            <div class="fausse-route h3"></div>
+            <div class="epingle" style="top: 45%; left: 38%">
+              <div class="corps-epingle vert"><span>📍</span></div>
+              <div class="bulle-epingle">Vous</div>
+            </div>
+            <div
+              class="epingle"
+              style="top: 22%; left: 58%; animation-delay: 0.5s"
+            >
+              <div class="corps-epingle orange"><span>🔧</span></div>
+              <div class="bulle-epingle">Mécanicien</div>
+            </div>
+            <div
+              class="epingle"
+              style="top: 65%; left: 62%; animation-delay: 1s"
+            >
+              <div class="corps-epingle bleu"><span>🏥</span></div>
+              <div class="bulle-epingle">Médecin</div>
+            </div>
+            <div
+              class="epingle"
+              style="top: 30%; left: 72%; animation-delay: 1.5s"
+            >
+              <div class="corps-epingle jaune"><span>⚡</span></div>
+              <div class="bulle-epingle">Électricien</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      
-      <div>
-        <div class="barre-recherche">
-          <input type="text" class="champ-recherche" placeholder="Ex: mécanicien, médecin..." />
-          <button class="bouton-rechercher" onclick="afficherNotification('🔍 Recherche en cours...')">
-            Rechercher
+    <!-- ZONES -->
+    <section id="zones">
+      <div class="en-tete-section">
+        <div class="etiquette-section">✦ Couverture</div>
+        <h2 class="titre-section apparition">
+          Disponible dans<br />tout le Sénégal.
+        </h2>
+        <p class="sous-titre-section apparition">
+          Présent dans les principales villes, DIAPALEMA continue de s'étendre.
+        </p>
+      </div>
+      <div class="grille-zones">
+        <div class="carte-zone apparition">
+          <div class="emoji-zone">🏙️</div>
+          <div>
+            <div class="nom-zone">Dakar</div>
+            <div class="nb-pros">312 professionnels</div>
+          </div>
+        </div>
+        <div class="carte-zone apparition" style="transition-delay: 0.05s">
+          <div class="emoji-zone">🌆</div>
+          <div>
+            <div class="nom-zone">Thiès</div>
+            <div class="nb-pros">98 professionnels</div>
+          </div>
+        </div>
+        <div class="carte-zone apparition" style="transition-delay: 0.1s">
+          <div class="emoji-zone">🌇</div>
+          <div>
+            <div class="nom-zone">Saint-Louis</div>
+            <div class="nb-pros">74 professionnels</div>
+          </div>
+        </div>
+        <div class="carte-zone apparition" style="transition-delay: 0.15s">
+          <div class="emoji-zone">🏘️</div>
+          <div>
+            <div class="nom-zone">Ziguinchor</div>
+            <div class="nb-pros">56 professionnels</div>
+          </div>
+        </div>
+        <div class="carte-zone apparition" style="transition-delay: 0.2s">
+          <div class="emoji-zone">🌃</div>
+          <div>
+            <div class="nom-zone">Kaolack</div>
+            <div class="nb-pros">63 professionnels</div>
+          </div>
+        </div>
+        <div class="carte-zone apparition" style="transition-delay: 0.25s">
+          <div class="emoji-zone">🕌</div>
+          <div>
+            <div class="nom-zone">Touba</div>
+            <div class="nb-pros">47 professionnels</div>
+          </div>
+        </div>
+        <div class="carte-zone apparition" style="transition-delay: 0.3s">
+          <div class="emoji-zone">🌉</div>
+          <div>
+            <div class="nom-zone">Mbour</div>
+            <div class="nb-pros">39 professionnels</div>
+          </div>
+        </div>
+        <div class="carte-zone apparition" style="transition-delay: 0.35s">
+          <div class="emoji-zone">📍</div>
+          <div>
+            <div class="nom-zone">+ 6 villes</div>
+            <div class="nb-pros">En cours d'expansion</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TÉMOIGNAGES -->
+    <section id="temoignages">
+      <div class="en-tete-section">
+        <div class="etiquette-section">✦ Témoignages</div>
+        <h2 class="titre-section apparition">Ce qu'ils disent</h2>
+        <p class="sous-titre-section apparition">
+          Des milliers de Sénégalais utilisent DIAPALEMA au quotidien.
+        </p>
+      </div>
+      <div class="grille-temoignages">
+        <div class="carte-temoignage apparition">
+          <div class="etoiles-temoignage">★★★★★</div>
+          <p class="texte-temoignage">
+            "J'étais en panne à 22h sur la route de Thiès. En 5 minutes j'avais
+            un mécanicien qui arrivait. DIAPALEMA m'a sauvé !"
+          </p>
+          <div class="auteur-temoignage">
+            <div class="avatar-temoignage">O</div>
+            <div>
+              <div class="nom-auteur">Ousmane Diallo</div>
+              <div class="ville-auteur">Thiès, Sénégal</div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="carte-temoignage apparition"
+          style="transition-delay: 0.15s"
+        >
+          <div class="etoiles-temoignage">★★★★★</div>
+          <p class="texte-temoignage">
+            "Mon fils a eu une crise, je ne savais pas quoi faire. DIAPALEMA m'a
+            connectée à un médecin en moins de 10 minutes. Merci infiniment."
+          </p>
+          <div class="auteur-temoignage">
+            <div class="avatar-temoignage">A</div>
+            <div>
+              <div class="nom-auteur">Aissatou Sow</div>
+              <div class="ville-auteur">Dakar, Sénégal</div>
+            </div>
+          </div>
+        </div>
+        <div class="carte-temoignage apparition" style="transition-delay: 0.3s">
+          <div class="etoiles-temoignage">★★★★★</div>
+          <p class="texte-temoignage">
+            "Panne électrique en pleine nuit, j'ai trouvé un électricien
+            disponible à 800m de chez moi. Problème résolu en 30 minutes !"
+          </p>
+          <div class="auteur-temoignage">
+            <div class="avatar-temoignage">M</div>
+            <div>
+              <div class="nom-auteur">Mamadou Ndiaye</div>
+              <div class="ville-auteur">Saint-Louis, Sénégal</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="en-tete-section">
+        <div class="etiquette-section">✦ FAQ</div>
+        <h2 class="titre-section apparition">Questions fréquentes</h2>
+        <p class="sous-titre-section apparition">
+          Tout ce que vous devez savoir sur DIAPALEMA.
+        </p>
+      </div>
+      <div class="liste-faq">
+        <div class="item-faq apparition">
+          <button class="question-faq" onclick="basculerFaq(this)">
+            Comment fonctionne DIAPALEMA ?<span class="icone-faq">+</span>
+          </button>
+          <div class="reponse-faq">
+            <div class="reponse-faq-interieur">
+              DIAPALEMA utilise votre géolocalisation pour trouver en temps réel
+              les professionnels disponibles les plus proches. Choisissez le
+              type d'aide, sélectionnez un professionnel et contactez-le
+              directement.
+            </div>
+          </div>
+        </div>
+        <div class="item-faq apparition" style="transition-delay: 0.05s">
+          <button class="question-faq" onclick="basculerFaq(this)">
+            Le service est-il gratuit pour les utilisateurs ?<span
+              class="icone-faq"
+              >+</span
+            >
+          </button>
+          <div class="reponse-faq">
+            <div class="reponse-faq-interieur">
+              Oui, l'application est entièrement gratuite pour les personnes
+              cherchant de l'aide. Les professionnels paient une petite
+              commission sur les missions accomplies.
+            </div>
+          </div>
+        </div>
+        <div class="item-faq apparition" style="transition-delay: 0.1s">
+          <button class="question-faq" onclick="basculerFaq(this)">
+            Comment devenir prestataire sur DIAPALEMA ?<span class="icone-faq"
+              >+</span
+            >
+          </button>
+          <div class="reponse-faq">
+            <div class="reponse-faq-interieur">
+              Inscrivez-vous via la section "Devenir prestataire", renseignez
+              votre métier et vos justificatifs. Notre équipe vérifie votre
+              profil sous 48h, puis vous commencez à recevoir des demandes.
+            </div>
+          </div>
+        </div>
+        <div class="item-faq apparition" style="transition-delay: 0.15s">
+          <button class="question-faq" onclick="basculerFaq(this)">
+            Les professionnels sont-ils vérifiés ?<span class="icone-faq"
+              >+</span
+            >
+          </button>
+          <div class="reponse-faq">
+            <div class="reponse-faq-interieur">
+              Oui. Chaque professionnel passe par une vérification d'identité et
+              de qualifications. Le système de notation garantit une qualité de
+              service continue.
+            </div>
+          </div>
+        </div>
+        <div class="item-faq apparition" style="transition-delay: 0.2s">
+          <button class="question-faq" onclick="basculerFaq(this)">
+            DIAPALEMA est-il disponible dans ma ville ?<span class="icone-faq"
+              >+</span
+            >
+          </button>
+          <div class="reponse-faq">
+            <div class="reponse-faq-interieur">
+              Disponible à Dakar, Thiès, Saint-Louis, Ziguinchor, Kaolack, Touba
+              et Mbour. Inscrivez-vous pour être notifié lors de l'arrivée dans
+              votre ville.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="appel-action">
+      <div class="contenu-cta">
+        <div
+          class="etiquette-section"
+          style="justify-content: center; margin-bottom: 16px"
+        >
+          ✦ Rejoindre DIAPALEMA
+        </div>
+        <h2 class="titre-cta apparition">
+          Prêt à aider<br />ou à être <span>aidé ?</span>
+        </h2>
+        <p class="sous-titre-cta apparition">
+          Que vous soyez professionnel ou citoyen cherchant de l'aide —
+          DIAPALEMA est pour vous.
+        </p>
+        <div class="formulaire-inscription apparition">
+          <input
+            type="tel"
+            id="champ-telephone"
+            class="champ-telephone"
+            placeholder="Votre numéro de téléphone"
+          />
+          <button class="bouton-inscription" id="bouton-inscription">
+            S'inscrire
           </button>
         </div>
-
-        <div class="liste-resultats">
-
-          
-          <div class="carte-resultat" onclick="ouvrirModal('Amadou Diallo', 'Mécanicien Auto', '🔧', '0.8 km', '~12 min')">
-            <div class="haut-resultat">
-              <div class="avatar-resultat" style="background:rgba(255,109,0,0.1)">🔧</div>
-              <div>
-                <div class="nom-resultat">Amadou Diallo</div>
-                <div class="metier-resultat">Mécanicien Auto</div>
-              </div>
-            </div>
-            <div class="meta-resultat">
-              <div class="distance-resultat">📍 0.8 km</div>
-              <div class="etoiles">★★★★★ 4.9</div>
-            </div>
-            <div class="actions-resultat">
-              <button class="bouton-appeler" onclick="event.stopPropagation(); ouvrirModal('Amadou Diallo','Mécanicien Auto','🔧','0.8 km','~12 min')">
-                📞 Contacter
-              </button>
-              <button class="bouton-message">💬</button>
-            </div>
-          </div>
-
-          
-          <div class="carte-resultat" onclick="ouvrirModal('Ibrahima Fall', 'Mécanicien Moto', '🔧', '1.2 km', '~18 min')">
-            <div class="haut-resultat">
-              <div class="avatar-resultat" style="background:rgba(255,109,0,0.1)">🔧</div>
-              <div>
-                <div class="nom-resultat">Ibrahima Fall</div>
-                <div class="metier-resultat">Mécanicien Moto</div>
-              </div>
-            </div>
-            <div class="meta-resultat">
-              <div class="distance-resultat">📍 1.2 km</div>
-              <div class="etoiles">★★★★☆ 4.6</div>
-            </div>
-            <div class="actions-resultat">
-              <button class="bouton-appeler" onclick="event.stopPropagation(); ouvrirModal('Ibrahima Fall','Mécanicien Moto','🔧','1.2 km','~18 min')">
-                📞 Contacter
-              </button>
-              <button class="bouton-message">💬</button>
-            </div>
-          </div>
-
-          
-          <div class="carte-resultat" onclick="ouvrirModal('Dr. Fatou Diop', 'Médecin généraliste', '🏥', '1.5 km', '~20 min')">
-            <div class="haut-resultat">
-              <div class="avatar-resultat" style="background:rgba(21,101,192,0.1)">🏥</div>
-              <div>
-                <div class="nom-resultat">Dr. Fatou Diop</div>
-                <div class="metier-resultat">Médecin généraliste</div>
-              </div>
-            </div>
-            <div class="meta-resultat">
-              <div class="distance-resultat">📍 1.5 km</div>
-              <div class="etoiles">★★★★★ 5.0</div>
-            </div>
-            <div class="actions-resultat">
-              <button class="bouton-appeler" onclick="event.stopPropagation(); ouvrirModal('Dr. Fatou Diop','Médecin généraliste','🏥','1.5 km','~20 min')">
-                📞 Contacter
-              </button>
-              <button class="bouton-message">💬</button>
-            </div>
-          </div>
-
-        </div>
       </div>
+    </section>
 
-      
-      <div class="zone-carte-visuelle">
-        <div class="fond-carte-visuelle">
-          <div class="grille-fausse-carte"></div>
-          <div class="fausse-route h"></div>
-          <div class="fausse-route v"></div>
-          <div class="texte-carte-centre">🗺️</div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  
-  <section id="temoignages">
-    <div class="en-tete-section">
-      <div class="etiquette-section">✦ Témoignages</div>
-      <h2 class="titre-section apparition">Ce qu'ils disent</h2>
-      <p class="sous-titre-section apparition">
-        Des milliers de Sénégalais utilisent DIAPALEMA au quotidien.
-      </p>
-    </div>
-
-    <div class="grille-temoignages">
-      <div class="carte-temoignage apparition">
-        <div class="etoiles-temoignage">★★★★★</div>
-        <p class="texte-temoignage">
-          "J'étais en panne à 22h sur la route de Thiès. En 5 minutes j'avais
-          un mécanicien qui arrivait. DIAPALEMA m'a sauvé !"
-        </p>
-        <div class="auteur-temoignage">
-          <div class="avatar-temoignage">O</div>
-          <div>
-            <div class="nom-auteur">Ousmane Diallo</div>
-            <div class="ville-auteur">Thiès, Sénégal</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="carte-temoignage apparition" style="transition-delay:0.15s">
-        <div class="etoiles-temoignage">★★★★★</div>
-        <p class="texte-temoignage">
-          "Mon fils a eu une crise, je ne savais pas quoi faire. DIAPALEMA m'a
-          connectée à un médecin en moins de 10 minutes. Merci infiniment."
-        </p>
-        <div class="auteur-temoignage">
-          <div class="avatar-temoignage">A</div>
-          <div>
-            <div class="nom-auteur">Aissatou Sow</div>
-            <div class="ville-auteur">Dakar, Sénégal</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="carte-temoignage apparition" style="transition-delay:0.3s">
-        <div class="etoiles-temoignage">★★★★★</div>
-        <p class="texte-temoignage">
-          "Panne électrique en pleine nuit, j'ai trouvé un électricien
-          disponible à 800m de chez moi. Problème résolu en 30 minutes !"
-        </p>
-        <div class="auteur-temoignage">
-          <div class="avatar-temoignage">M</div>
-          <div>
-            <div class="nom-auteur">Mamadou Ndiaye</div>
-            <div class="ville-auteur">Saint-Louis, Sénégal</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  
-  <section id="appel-action">
-    <div class="contenu-cta">
-      <div class="etiquette-section" style="justify-content:center; margin-bottom:16px">
-        ✦ Rejoindre DIAPALEMA
-      </div>
-      <h2 class="titre-cta apparition">
-        Prêt à aider<br />ou à être <span>aidé ?</span>
-      </h2>
-
-      <p class="sous-titre-cta apparition">
-        Que vous soyez professionnel voulant proposer vos services ou citoyen
-        cherchant de l'aide — DIAPALEMA est pour vous.
-      </p>
-      <div class="formulaire-inscription apparition">
-        <input type="tel" id="champ-telephone" class="champ-telephone" placeholder="Votre numéro de téléphone" />
-        <button class="bouton-inscription" id="bouton-inscription">S'inscrire</button>
-      </div>
-    </div>
-  </section>
-
-  
-  <footer id="pied-page">
-    <p class="copyright">
-      © 2025 Pape Latyr <span>SENE</span>. Conçu &amp; développé avec passion.
-    </p>
-    <a href="#haut" class="retour-haut">
-      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <path d="M5 15l7-7 7 7" />
-      </svg>
-      Retour en haut
-    </a>
-  </footer>
-
-  
-  <div id="modal">
-    <div class="contenu-modal">
-      <button class="bouton-fermer-modal" onclick="fermerModal()">✕</button>
-      <h3 id="modal-titre" style="font-size:18px; font-weight:700; margin-bottom:20px; color:#0d1f0f">Contacter</h3>
-      <div class="profil-modal">
-        <div class="avatar-modal" id="modal-avatar">🔧</div>
+    <!-- FOOTER -->
+    <footer id="pied-page">
+      <div class="grille-pied">
         <div>
-          <div class="nom-modal" id="modal-nom">Nom</div>
-          <div class="metier-modal" id="modal-metier">Métier</div>
+          <div class="logo-pied">DIAPA<span>LEMA</span></div>
+          <p class="desc-pied">
+            Connecter les personnes en difficulté avec les professionnels
+            disponibles les plus proches, partout au Sénégal.
+          </p>
+        </div>
+        <div class="colonne-pied">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">Mécanicien</a></li>
+            <li><a href="#services">Médecin</a></li>
+            <li><a href="#services">Électricien</a></li>
+            <li><a href="#services">Plombier</a></li>
+            <li><a href="#services">Serrurier</a></li>
+          </ul>
+        </div>
+        <div class="colonne-pied">
+          <h4>À propos</h4>
+          <ul>
+            <li><a href="#comment-ca-marche">Comment ça marche</a></li>
+            <li><a href="#zones">Zones couvertes</a></li>
+            <li><a href="#temoignages">Témoignages</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="colonne-pied">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="index.html#contact">Nous contacter</a></li>
+            <li><a href="#appel-action">Devenir prestataire</a></li>
+            <li><a href="index.html">Portfolio Pape Latyr</a></li>
+          </ul>
         </div>
       </div>
-      <div class="infos-modal">
-        <div class="info-modal-item">
-          <div class="info-modal-label">Distance</div>
-          <div class="info-modal-valeur" id="modal-distance">—</div>
-        </div>
-        <div class="info-modal-item">
-          <div class="info-modal-label">Arrivée estimée</div>
-          <div class="info-modal-valeur" id="modal-temps">—</div>
-        </div>
+      <div class="barre-pied">
+        <p class="copyright">
+          © 2025 Pape Latyr <span>SENE</span>. Conçu &amp; développé avec
+          passion.
+        </p>
+        <a href="#haut" class="retour-haut"
+          ><svg
+            width="14"
+            height="14"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M5 15l7-7 7 7" />
+          </svg>
+          Retour en haut</a
+        >
       </div>
-      <div class="actions-modal">
-        <button class="bouton-appeler-modal" onclick="appelerPro()">📞 Appeler maintenant</button>
-        <button class="bouton-message-modal" onclick="fermerModal(); afficherNotification('💬 Message envoyé !')">💬 Message</button>
+    </footer>
+
+    <!-- MODAL -->
+    <div id="modal">
+      <div class="contenu-modal">
+        <button class="bouton-fermer-modal" onclick="fermerModal()">✕</button>
+        <h3
+          id="modal-titre"
+          style="
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #0d1f0f;
+          "
+        >
+          Contacter
+        </h3>
+        <div class="profil-modal">
+          <div class="avatar-modal" id="modal-avatar">🔧</div>
+          <div>
+            <div class="nom-modal" id="modal-nom">Nom</div>
+            <div class="metier-modal" id="modal-metier">Métier</div>
+          </div>
+        </div>
+        <div class="infos-modal">
+          <div class="info-modal-item">
+            <div class="info-modal-label">Distance</div>
+            <div class="info-modal-valeur" id="modal-distance">—</div>
+          </div>
+          <div class="info-modal-item">
+            <div class="info-modal-label">Arrivée estimée</div>
+            <div class="info-modal-valeur" id="modal-temps">—</div>
+          </div>
+        </div>
+        <div class="actions-modal">
+          <button class="bouton-appeler-modal" onclick="appelerPro()">
+            📞 Appeler maintenant
+          </button>
+          <button
+            class="bouton-message-modal"
+            onclick="
+              fermerModal();
+              afficherNotification('💬 Message envoyé !');
+            "
+          >
+            💬 Message
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  
-  <div id="notification"></div>
+    <div id="notification"></div>
 
-  
-  <script src="js/diapalema.js"></script>
+    <script>
+      /* Scroll apparition */
+      const obs = new IntersectionObserver(
+        (e) =>
+          e.forEach((x) => {
+            if (x.isIntersecting) x.target.classList.add("visible");
+          }),
+        { threshold: 0.1 },
+      );
+      document.querySelectorAll(".apparition").forEach((el) => obs.observe(el));
 
-</body>
+      /* Nav */
+      window.addEventListener("scroll", () =>
+        document
+          .getElementById("barre-navigation")
+          .classList.toggle("defilement", window.scrollY > 40),
+      );
+
+      /* Hamburger */
+      document.getElementById("bouton-menu").addEventListener("click", () => {
+        const nav = document.querySelector(".liens-nav");
+        const ouvert = nav.style.display === "flex";
+        if (ouvert) {
+          nav.removeAttribute("style");
+        } else {
+          Object.assign(nav.style, {
+            display: "flex",
+            flexDirection: "column",
+            position: "absolute",
+            top: "70px",
+            right: "5vw",
+            background: "rgba(245,247,242,0.98)",
+            padding: "20px 28px",
+            border: "1px solid rgba(0,0,0,0.08)",
+            borderRadius: "16px",
+            gap: "16px",
+            zIndex: "999",
+            boxShadow: "0 12px 32px rgba(0,0,0,0.1)",
+          });
+        }
+      });
+
+      /* Modal */
+      function ouvrirModal(nom, metier, emoji, dist, temps) {
+        document.getElementById("modal-nom").textContent = nom;
+        document.getElementById("modal-metier").textContent = metier;
+        document.getElementById("modal-avatar").textContent = emoji;
+        document.getElementById("modal-distance").textContent =
+          dist + " de vous";
+        document.getElementById("modal-temps").textContent = temps;
+        document.getElementById("modal-titre").textContent =
+          "Contacter " + nom.split(" ")[0];
+        document.getElementById("modal").classList.add("ouvert");
+      }
+      function fermerModal() {
+        document.getElementById("modal").classList.remove("ouvert");
+      }
+      document.getElementById("modal").addEventListener("click", function (e) {
+        if (e.target === this) fermerModal();
+      });
+      function appelerPro() {
+        fermerModal();
+        afficherNotification("📞 Appel en cours...");
+      }
+
+      /* Notification */
+      function afficherNotification(msg) {
+        const n = document.getElementById("notification");
+        n.textContent = msg;
+        n.classList.add("affiche");
+        setTimeout(() => n.classList.remove("affiche"), 3000);
+      }
+
+      /* Vers service */
+      function allerVersService(s) {
+        document
+          .getElementById("carte-recherche")
+          .scrollIntoView({ behavior: "smooth" });
+        setTimeout(() => {
+          document.getElementById("champ-recherche").value = s;
+          filtrerResultats();
+        }, 700);
+      }
+
+      /* Filtre */
+      function filtrerResultats() {
+        const t = document
+          .getElementById("champ-recherche")
+          .value.toLowerCase()
+          .trim();
+        const cartes = document.querySelectorAll(".carte-resultat");
+        let n = 0;
+        cartes.forEach((c) => {
+          const ok =
+            t === "" ||
+            c.dataset.metier.includes(t) ||
+            c
+              .querySelector(".nom-resultat")
+              .textContent.toLowerCase()
+              .includes(t);
+          c.style.display = ok ? "" : "none";
+          if (ok) n++;
+        });
+        afficherNotification(
+          t === ""
+            ? "🔍 Tous les professionnels"
+            : n > 0
+              ? `🔍 ${n} résultat${n > 1 ? "s" : ""} trouvé${n > 1 ? "s" : ""}`
+              : `❌ Aucun résultat pour "${t}"`,
+        );
+      }
+      document
+        .getElementById("champ-recherche")
+        .addEventListener("keydown", (e) => {
+          if (e.key === "Enter") filtrerResultats();
+        });
+
+      /* Compteurs */
+      const obsS = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            const el = e.target,
+              cible = parseInt(el.dataset.cible),
+              suf = el.dataset.suf || "";
+            let v = 0;
+            const step = cible / 60;
+            const t = setInterval(() => {
+              v += step;
+              if (v >= cible) {
+                v = cible;
+                clearInterval(t);
+              }
+              el.textContent = Math.floor(v).toLocaleString("fr-FR") + suf;
+            }, 30);
+            obsS.unobserve(el);
+          });
+        },
+        { threshold: 0.5 },
+      );
+      document
+        .querySelectorAll(".stat-nombre")
+        .forEach((el) => obsS.observe(el));
+
+      /* FAQ */
+      function basculerFaq(btn) {
+        const item = btn.closest(".item-faq"),
+          rep = item.querySelector(".reponse-faq"),
+          int = item.querySelector(".reponse-faq-interieur"),
+          ouvert = item.classList.contains("ouvert");
+        document.querySelectorAll(".item-faq.ouvert").forEach((i) => {
+          i.classList.remove("ouvert");
+          i.querySelector(".reponse-faq").style.maxHeight = "0";
+        });
+        if (!ouvert) {
+          item.classList.add("ouvert");
+          rep.style.maxHeight = int.offsetHeight + 24 + "px";
+        }
+      }
+
+      /* Inscription */
+      document
+        .getElementById("bouton-inscription")
+        .addEventListener("click", () => {
+          const tel = document.getElementById("champ-telephone").value.trim();
+          if (!tel) {
+            afficherNotification("⚠️ Veuillez entrer votre numéro");
+            return;
+          }
+          afficherNotification("✅ Inscription envoyée !");
+          document.getElementById("champ-telephone").value = "";
+        });
+
+      /* Sélection résultat */
+      document.querySelectorAll(".carte-resultat").forEach((c) =>
+        c.addEventListener("click", function () {
+          document
+            .querySelectorAll(".carte-resultat")
+            .forEach((x) => x.classList.remove("actif"));
+          this.classList.add("actif");
+        }),
+      );
+    </script>
+  </body>
 </html>

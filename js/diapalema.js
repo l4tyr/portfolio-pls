@@ -58,14 +58,6 @@ document.querySelectorAll(".carte-resultat").forEach((carte) => {
   });
 });
 
-document.getElementById("bouton-inscription").addEventListener("click", () => {
-  const telephone = document.getElementById("champ-telephone").value;
-
-  if (telephone.trim() === "") {
-    afficherNotification("⚠️ Veuillez entrer votre numéro");
-    return;
-  }
-
-  afficherNotification("✅ Inscription envoyée !");
-  document.getElementById("champ-telephone").value = "";
+document.getElementById("bouton-menu").addEventListener("click", function() {
+  document.querySelector("nav").classList.toggle("menu-ouvert");
 });
